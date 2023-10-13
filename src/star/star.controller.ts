@@ -14,4 +14,9 @@ export class StarController {
   findAllFilm(@Query('page') page: number) {
     return this.starService.findAllFilm(page);
   }
+
+  @Get('planets')
+  findAllPlanet(@Query('page') page: number) {
+    return this.starService.findAllPlanet(page);
+  }
 }
