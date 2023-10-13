@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { People } from './entities/people.entity';
+import { People, Film } from './entities/';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 
@@ -14,6 +14,19 @@ export class StarService {
     const param = page ? '/?page=' + page : '';
     const { data } = await firstValueFrom(
       this.httpService.get<People[]>(this.urlBase + '/people' + param).pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
+    );
+    return data;
+  }
+
+  async findAllFilm(page: number): Promise<Film[]> {
+    const param = page ? '/?page=' + page : '';
+    const { data } = await firstValueFrom(
+      this.httpService.get<Film[]>(this.urlBase + '/films' + param).pipe(
         catchError((error: AxiosError) => {
           this.logger.error(error.response.data);
           throw 'An error happened!';

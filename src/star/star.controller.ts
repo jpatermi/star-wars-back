@@ -9,4 +9,9 @@ export class StarController {
   findAllPeople(@Query('page') page: number) {
     return this.starService.findAllPeople(page);
   }
+
+  @Get('films')
+  findAllFilm(@Query('page') page: number) {
+    return this.starService.findAllFilm(page);
+  }
 }
