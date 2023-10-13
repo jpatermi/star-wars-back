@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { People, Film, Planet } from './entities/';
+import { People, Film, Planet, Starship } from './entities/';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 
@@ -45,6 +45,21 @@ export class StarService {
           throw 'An error happened!';
         }),
       ),
+    );
+    return data;
+  }
+
+  async findAllStarship(page: number): Promise<Starship[]> {
+    const param = page ? '/?page=' + page : '';
+    const { data } = await firstValueFrom(
+      this.httpService
+        .get<Starship[]>(this.urlBase + '/starships' + param)
+        .pipe(
+          catchError((error: AxiosError) => {
+            this.logger.error(error.response.data);
+            throw 'An error happened!';
+          }),
+        ),
     );
     return data;
   }

@@ -19,4 +19,9 @@ export class StarController {
   findAllPlanet(@Query('page') page: number) {
     return this.starService.findAllPlanet(page);
   }
+
+  @Get('starships')
+  findAllStarship(@Query('page') page: number) {
+    return this.starService.findAllStarship(page);
+  }
 }
